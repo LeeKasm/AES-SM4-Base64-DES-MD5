@@ -36,9 +36,13 @@ test code：<br>
 　　C#：<br>
 　　　byte[] str = Encoding.Default.GetBytes("测试字符");<br>
 　　　Aes aes = new AesManaged();<br>
+　　　aes.Padding = PaddingMode.PKCS7;<br>
+　　　aes.Mode = CipherMode.CBC;<br>
+　　　aes.KeySize = 128;<br>
+　　　aes.BlockSize = 128;<br>
 　　　aes.Key = Encoding.Default.GetBytes("thisIstheBestKey");<br>
 　　　aes.IV = new byte[] { 0x75, 0x52, 0x5f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x67, 0x21, 0x21 };<br>
-　　　aes.Padding = PaddingMode.PKCS7;<br>
+
 　　　byte[] encode_out = null;<br>
 　　　byte[] decode_out = null;<br>
 　　　using (MemoryStream ms = new MemoryStream())<br>
