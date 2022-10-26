@@ -21,6 +21,26 @@ test code：<br>
 　　　int decode_size = Encoding.Default.GetByteCount(decode_out);<br>
 <br>
 <br>
+　AES：<br>
+　　C/C++：<br>
+　　　const char* str = "测试字符";<br>
+　　　char key[17] = { "thisIstheBestKey" };<br>
+　　　char iv[17] = { 0x75, 0x52, 0x5f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x67, 0x21, 0x21,'\0' };<br>
+　　　size_t retLength;<br>
+　　　AES_CBC_PKCS7_ENCRYPT(key, iv, (uint8_t*)str, strlen(str), NULL, 0, &retLength);<br>
+　　　uint8_t* encode_out = (uint8_t*)calloc(1, retLength);<br>
+　　　bool bEncrypt = AES_CBC_PKCS7_ENCRYPT(key, iv, (uint8_t*)str, strlen(str), encode_out, retLength, &retLength);<br>
+　　　AES_CBC_PKCS7_DECRYPT(key, iv, encode_out, retLength, NULL, 0, &retLength);<br>
+　　　uint8_t* decode_out = (uint8_t*)calloc(1, retLength);<br>
+　　　bool bDecrypt = AES_CBC_PKCS7_DECRYPT(key, iv, encode_out, retLength, decode_out, retLength, &retLength);<br>
+
+　　C#：<br>
+　　　string encode_out = Algorithm.Base64.base64_encode("测试字符");<br>
+　　　int encode_size = Encoding.Default.GetByteCount(encode_out);<br>
+　　　string decode_out = Algorithm.Base64.base64_decode(encode_out);<br>
+　　　int decode_size = Encoding.Default.GetByteCount(decode_out);<br>
+<br>
+<br>
 - 📫 How to reach me **LeeKasm@gmail.com**
 
 <h3 align="left">Connect with me:</h3>
