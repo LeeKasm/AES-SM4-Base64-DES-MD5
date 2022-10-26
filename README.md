@@ -20,7 +20,6 @@ test code：<br>
 　　　string decode_out = Algorithm.Base64.base64_decode(encode_out);<br>
 　　　int decode_size = Encoding.Default.GetByteCount(decode_out);<br>
 <br>
-<br>
 　AES：<br>
 　　C/C++：<br>
 　　　const char* str = "测试字符";<br>
@@ -35,10 +34,27 @@ test code：<br>
 　　　bool bDecrypt = AES_CBC_PKCS7_DECRYPT(key, iv, encode_out, retLength, decode_out, retLength, &retLength);<br>
 
 　　C#：<br>
-　　　string encode_out = Algorithm.Base64.base64_encode("测试字符");<br>
-　　　int encode_size = Encoding.Default.GetByteCount(encode_out);<br>
-　　　string decode_out = Algorithm.Base64.base64_decode(encode_out);<br>
-　　　int decode_size = Encoding.Default.GetByteCount(decode_out);<br>
+　　　byte[] str = Encoding.Default.GetBytes("测试字符");<br>
+　　　Aes aes = new AesManaged();<br>
+　　　aes.Key = Encoding.Default.GetBytes("thisIstheBestKey");<br>
+　　　aes.IV = new byte[] { 0x75, 0x52, 0x5f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x67, 0x21, 0x21 };<br>
+　　　aes.Padding = PaddingMode.PKCS7;<br>
+　　　byte[] encode_out = null;<br>
+　　　byte[] decode_out = null;<br>
+　　　using (MemoryStream ms = new MemoryStream())<br>
+　　　{<br>
+　　　　　CryptoStream cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write);<br>
+　　　　　cs.Write(str, 0, str.Length);<br>
+　　　　　cs.Close();<br>
+　　　　　encode_out = ms.ToArray();<br>
+　　　}<br>
+　　　using (MemoryStream ms = new MemoryStream())<br>
+　　　{<br>
+　　　　　CryptoStream cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Write);<br>
+　　　　　cs.Write(encode_out, 0, encode_out.Length);<br>
+　　　　　cs.Close();<br>
+　　　　　decode_out = ms.ToArray();<br>
+　　　}<br>
 <br>
 <br>
 - 📫 How to reach me **LeeKasm@gmail.com**
