@@ -63,8 +63,8 @@ test code：<br>
 　　　char* encode_out = EncryptDES(str);<br>
 　　　char* decode_out = DecryptDES(encode_out);<br>
 　　C#：<br>
-　　　byte[] key = new byte[] { 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38 };<br>
-　　　byte[] iv = new byte[] { 0x38, 0x37, 0x36, 0x35, 0x34, 0x33, 0x32, 0x31 };<br>
+　　　byte[] key = Encoding.Default.GetBytes("12345678");<br>
+　　　byte[] iv = Encoding.Default.GetBytes("87654321");<br>
  　　　Algorithm.DES.InitEDS(key, iv);<br>
 　　　string encode_out = Algorithm.DES.EncryptDES("测试字符");<br>
 　　　string decode_out = Algorithm.DES.DecryptDES(encode_out);<br>
