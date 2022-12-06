@@ -39,12 +39,12 @@ namespace Algorithm
             {
                 byte[] inputByteArray = Encoding.UTF8.GetBytes(encryptString);
                 DESCryptoServiceProvider dCSP = new DESCryptoServiceProvider();
-                using (MemoryStream mStream = new MemoryStream())
-                using (CryptoStream cStream = new CryptoStream(mStream, dCSP.CreateEncryptor(DES_Key, DES_IV), CryptoStreamMode.Write))
+                using (MemoryStream ms = new MemoryStream())
+                using (CryptoStream cs = new CryptoStream(ms, dCSP.CreateEncryptor(DES_Key, DES_IV), CryptoStreamMode.Write))
                 {
-                    cStream.Write(inputByteArray, 0, inputByteArray.Length);
-                    cStream.FlushFinalBlock();
-                    return Convert.ToBase64String(mStream.ToArray());
+                    cs.Write(inputByteArray, 0, inputByteArray.Length);
+                    cs.FlushFinalBlock();
+                    return Convert.ToBase64String(ms.ToArray());
                 }
             }
             catch
@@ -65,12 +65,12 @@ namespace Algorithm
             {
                 byte[] inputByteArray = Convert.FromBase64String(decryptString);
                 DESCryptoServiceProvider DCSP = new DESCryptoServiceProvider();
-                using (MemoryStream mStream = new MemoryStream())
-                using (CryptoStream cStream = new CryptoStream(mStream, DCSP.CreateDecryptor(DES_Key, DES_IV), CryptoStreamMode.Write))
+                using (MemoryStream ms = new MemoryStream())
+                using (CryptoStream cs = new CryptoStream(ms, DCSP.CreateDecryptor(DES_Key, DES_IV), CryptoStreamMode.Write))
                 {
-                    cStream.Write(inputByteArray, 0, inputByteArray.Length);
-                    cStream.FlushFinalBlock();
-                    return Encoding.UTF8.GetString(mStream.ToArray());
+                    cs.Write(inputByteArray, 0, inputByteArray.Length);
+                    cs.FlushFinalBlock();
+                    return Encoding.UTF8.GetString(ms.ToArray());
                 }
             }
             catch
