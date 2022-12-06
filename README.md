@@ -42,17 +42,17 @@ test code：<br>
 　　　byte[] encode_out = null;<br>
 　　　byte[] decode_out = null;<br>
 　　　using (MemoryStream ms = new MemoryStream())<br>
+　　　using (CryptoStream cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))<br>
 　　　{<br>
-　　　　　CryptoStream cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write);<br>
 　　　　　cs.Write(str, 0, str.Length);<br>
-　　　　　cs.Close();<br>
+　　　　　cs.FlushFinalBlock();<br>
 　　　　　encode_out = ms.ToArray();<br>
 　　　}<br>
 　　　using (MemoryStream ms = new MemoryStream())<br>
+　　　using (CryptoStream cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Write))<br>
 　　　{<br>
-　　　　　CryptoStream cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Write);<br>
 　　　　　cs.Write(encode_out, 0, encode_out.Length);<br>
-　　　　　cs.Close();<br>
+　　　　　cs.FlushFinalBlock();<br>
 　　　　　decode_out = ms.ToArray();<br>
 　　　}<br>
 <br>
