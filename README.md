@@ -65,9 +65,35 @@ test code：<br>
 　　C#：<br>
 　　　byte[] key = Encoding.Default.GetBytes("12345678");<br>
 　　　byte[] iv = Encoding.Default.GetBytes("87654321");<br>
- 　　　Algorithm.DES.InitEDS(key, iv);<br>
+　　　Algorithm.DES.InitEDS(key, iv);<br>
 　　　string encode_out = Algorithm.DES.EncryptDES("测试字符");<br>
 　　　string decode_out = Algorithm.DES.DecryptDES(encode_out);<br>
+<br>
+　SM4：<br>
+　　C/C++：<br>
+　　　const char* str = "测试字符";<br>
+　　　char key[17] = { "thisIstheBestKey" };<br>
+　　　char iv[17] = { 0x75, 0x52, 0x5f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x67, 0x21, 0x21,'\0' };<br>
+　　　size_t retLength;<br>
+　　　SM4_CBC_PKCS7_ENCRYPT(key, iv, (uint8_t*)str, strlen(str), NULL, 0, &retLength);<br>
+　　　uint8_t* encode_out = (uint8_t*)calloc(1, retLength);<br>
+　　　bool bEncrypt = SM4_CBC_PKCS7_ENCRYPT(key, iv, (uint8_t*)str, strlen(str), encode_out, retLength, &retLength);<br>
+　　　SM4_CBC_PKCS7_DECRYPT(key, iv, encode_out, retLength, NULL, 0, &retLength);<br>
+　　　uint8_t* decode_out = (uint8_t*)calloc(1, retLength);<br>
+　　　bool bDecrypt = SM4_CBC_PKCS7_DECRYPT(key, iv, encode_out, retLength, decode_out, retLength, &retLength);<br>
+　　C#：<br>
+　　　byte[] str = Encoding.Default.GetBytes("测试字符");<br>
+　　　byte[] key = Encoding.Default.GetBytes("thisIstheBestKey");<br>
+　　　byte[] iv = new byte[] { 0x75, 0x52, 0x5f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x67, 0x21, 0x21 };<br>
+　　　int returnSize = 0;<br>
+　　　byte[] encode_out = null;<br>
+　　　byte[] decode_out = null;<br>
+　　　Algorithm.SM4.SM4_CBC_PKCS7_ENCRYPT(key, iv, str, ref encode_out, out returnSize);<br>
+　　　encode_out = new byte[returnSize];<br>
+　　　bool bEncrypt = Algorithm.SM4.SM4_CBC_PKCS7_ENCRYPT(key, iv, str, ref encode_out, out returnSize);<br>
+　　　Algorithm.SM4.SM4_CBC_PKCS7_DECRYPT(key, iv, encode_out, ref decode_out, out returnSize);<br>
+　　　decode_out = new byte[returnSize];<br>
+　　　bool bDecrypt = Algorithm.SM4.SM4_CBC_PKCS7_DECRYPT(key, iv, encode_out, ref decode_out, out returnSize);<br>
 <br>
 <br>
 - 📫 How to reach me **LeeKasm@gmail.com**
