@@ -16,20 +16,20 @@ int pkcs7_padding_pad_buffer(uint8_t* buffer, size_t data_length, size_t buffer_
     return pad_byte;
 }
 
-bool pkcs7_padding_valid(uint8_t* buffer, size_t data_length, size_t buffer_size, uint8_t modulus) {
+bool_x pkcs7_padding_valid(uint8_t* buffer, size_t data_length, size_t buffer_size, uint8_t modulus) {
 
     uint8_t expected_pad_byte = modulus - (data_length % modulus);
     if (data_length + expected_pad_byte > buffer_size) {
-        return false;
+        return false_x;
     }
     int i = 0;
     while (i < expected_pad_byte) {
         if (buffer[data_length + i] != expected_pad_byte) {
-            return false;
+            return false_x;
         }
         i++;
     }
-    return true;
+    return true_x;
 }
 
 size_t pkcs7_padding_data_length(uint8_t* buffer, size_t buffer_size, uint8_t modulus) {

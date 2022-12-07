@@ -5,11 +5,14 @@
 extern "C" {
 #endif
 
+#define PADDING_OUT_SIZE(s) (((s + 15) / 16) * 16)
 
-#define AES_PADDING_OUT_SIZE(s) (((s + 15) / 16) * 16)
-#define bool int
-#define true 1
-#define false 0
+#ifndef bool_x
+#define bool_x int
+#define true_x 1
+#define false_x 0
+#endif // !bool_x
+
 
 #include <stdint.h>
 #include <stddef.h>
@@ -20,7 +23,7 @@ extern "C" {
  */
 int pkcs7_padding_pad_buffer(uint8_t* buffer, size_t data_length, size_t buffer_size, uint8_t modulus);
 
-bool pkcs7_padding_valid(uint8_t* buffer, size_t data_length, size_t buffer_size, uint8_t modulus);
+bool_x pkcs7_padding_valid(uint8_t* buffer, size_t data_length, size_t buffer_size, uint8_t modulus);
 
 /* Given a block of pkcs7 padded data, return the actual data length in the block based on the padding applied.
  * buffer_size must be a multiple of modulus
