@@ -4,29 +4,16 @@
 <h2 align="center">A developer from China</h2>
 <h3 align="left">支持C/C++、C#语言的算法库：</h3>
 
-* Base64编码
 * AES PKCS7填充算法
-* DES算法
 * SM4 PKCS7填充算法
+* Base64编码
+* DES算法
 * MD5算法
 
 <p align="left"> <img src="https://komarev.com/ghpvc/?username=leekasm&label=Profile%20views&color=0e75b6&style=flat" alt="leekasm" /> </p>
 
 <p align="left"> <a href="https://github.com/ryo-ma/github-profile-trophy"><img src="https://github-profile-trophy.vercel.app/?username=leekasm" alt="leekasm" /></a> </p>
 test code：<br>
-　Base64：<br>
-　　C/C++：<br>
-　　　const char* str = "测试字符";<br>
-　　　char* encode_out = (char*)malloc(BASE64_ENCODE_OUT_SIZE(strlen(str)));<br>
-　　　int encode_size = base64_encode((char*)str, strlen(str), encode_out);<br>
-　　　char* decode_out = (char*)malloc(BASE64_DECODE_OUT_SIZE(encode_size));<br>
-　　　int decode_size = base64_decode(encode_out, encode_size, decode_out);<br>
-　　C#：<br>
-　　　string encode_out = Algorithm.Base64.base64_encode("测试字符");<br>
-　　　int encode_size = Encoding.Default.GetByteCount(encode_out);<br>
-　　　string decode_out = Algorithm.Base64.base64_decode(encode_out);<br>
-　　　int decode_size = Encoding.Default.GetByteCount(decode_out);<br>
-<br>
 　AES：<br>
 　　C/C++：<br>
 　　　const char* str = "测试字符";<br>
@@ -63,19 +50,6 @@ test code：<br>
 　　　　　decode_out = ms.ToArray();<br>
 　　　}<br>
 <br>
-　DES：<br>
-　　C/C++：<br>
-　　　const char* str = "测试字符"; <br>
-　　　InitDES("12345678", "87654321");<br>
-　　　char* encode_out = EncryptDES(str);<br>
-　　　char* decode_out = DecryptDES(encode_out);<br>
-　　C#：<br>
-　　　byte[] key = Encoding.Default.GetBytes("12345678");<br>
-　　　byte[] iv = Encoding.Default.GetBytes("87654321");<br>
-　　　Algorithm.DES.InitEDS(key, iv);<br>
-　　　string encode_out = Algorithm.DES.EncryptDES("测试字符");<br>
-　　　string decode_out = Algorithm.DES.DecryptDES(encode_out);<br>
-<br>
 　SM4：<br>
 　　C/C++：<br>
 　　　const char* str = "测试字符";<br>
@@ -101,6 +75,38 @@ test code：<br>
 　　　Algorithm.SM4.SM4_CBC_PKCS7_DECRYPT(key, iv, encode_out, ref decode_out, out returnSize);<br>
 　　　decode_out = new byte[returnSize];<br>
 　　　bool bDecrypt = Algorithm.SM4.SM4_CBC_PKCS7_DECRYPT(key, iv, encode_out, ref decode_out, out returnSize);<br>
+<br>
+　Base64：<br>
+　　C/C++：<br>
+　　　const char* str = "测试字符";<br>
+　　　char* encode_out = NULL;<br>
+　　　char* decode_out = NULL;<br>
+　　　size_t encode_size = 0;<br>
+　　　size_t decode_size = 0;<br>
+　　　base64_encode((char*)str, strlen(str), NULL, 0, &encode_size);<br>
+　　　encode_out = (char*)calloc(1, encode_size + 1);<br>
+　　　bool bEncrypt = base64_encode(str, strlen(str), encode_out, encode_size + 1, &encode_size);<br>
+　　　base64_decode(encode_out, encode_size, NULL, 0, &decode_size);<br>
+　　　decode_out = (char*)calloc(1, decode_size + 1);<br>
+　　　bool bDecrypt = base64_decode(encode_out, encode_size, decode_out, decode_size + 1, &decode_size);<br>
+　　C#：<br>
+　　　string encode_out = Algorithm.Base64.base64_encode("测试字符");<br>
+　　　int encode_size = Encoding.Default.GetByteCount(encode_out);<br>
+　　　string decode_out = Algorithm.Base64.base64_decode(encode_out);<br>
+　　　int decode_size = Encoding.Default.GetByteCount(decode_out);<br>
+<br>
+　DES：<br>
+　　C/C++：<br>
+　　　const char* str = "测试字符"; <br>
+　　　InitDES("12345678", "87654321");<br>
+　　　char* encode_out = EncryptDES(str);<br>
+　　　char* decode_out = DecryptDES(encode_out);<br>
+　　C#：<br>
+　　　byte[] key = Encoding.Default.GetBytes("12345678");<br>
+　　　byte[] iv = Encoding.Default.GetBytes("87654321");<br>
+　　　Algorithm.DES.InitEDS(key, iv);<br>
+　　　string encode_out = Algorithm.DES.EncryptDES("测试字符");<br>
+　　　string decode_out = Algorithm.DES.DecryptDES(encode_out);<br>
 <br>
 　MD5：<br>
 　　C/C++：<br>
