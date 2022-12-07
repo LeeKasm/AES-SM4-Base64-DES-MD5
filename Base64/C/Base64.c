@@ -69,8 +69,22 @@ static const unsigned char base64de[] = {
 	    49,  50,  51, 255, 255, 255, 255, 255
 };
 
-unsigned int
-base64_encode(const char* input, unsigned int inlen, char* output) {
+size_t base64_encodedLength(size_t length) {
+
+	return (length + 2 - ((length + 2) % 3)) / 3 * 4;
+}
+
+size_t base64_decodedLength(const char* in, size_t in_length) {
+
+	int numEq = 0;
+
+	const char* in_end = in + in_length;
+	while (*--in_end == '=') ++numEq;
+
+	return ((6 * in_length) / 8) - numEq;
+}
+
+int base64_encode(const char* input, size_t input_length, char* output, size_t out_length, size_t* encoded_length) {
 
 	int s;
 	unsigned int i;
@@ -78,9 +92,17 @@ base64_encode(const char* input, unsigned int inlen, char* output) {
 	unsigned char c;
 	unsigned char l;
 
+	if (input == NULL || input_length == 0 || encoded_length == NULL)
+		return 0;
+
+	*encoded_length = base64_encodedLength(input_length);
+
+	if (output == NULL || out_length == 0 || out_length < *encoded_length)
+		return 0;
+
 	s = 0;
 	l = 0;
-	for (i = j = 0; i < inlen; i++) {
+	for (i = j = 0; i < input_length; i++) {
 		c = input[i];
 
 		switch (s) {
@@ -115,21 +137,30 @@ base64_encode(const char* input, unsigned int inlen, char* output) {
 
 	output[j] = 0;
 
-	return j;
+	*encoded_length = j;
+
+	return 1;
 }
 
-unsigned int
-base64_decode(const char* input, unsigned int inlen, char* output) {
+int base64_decode(const char* input, size_t input_length, char* output, size_t out_length, size_t* decoded_length) {
 
 	unsigned int i;
 	unsigned int j;
 	unsigned char c;
 
-	if (inlen & 0x3) {
+	if (input == NULL || input_length == 0 || decoded_length == NULL)
+		return 0;
+
+	*decoded_length = base64_decodedLength(input, input_length);
+
+	if (output == NULL || out_length == 0 || out_length < *decoded_length)
+		return 0;
+
+	if (input_length & 0x3) {
 		return 0;
 	}
 
-	for (i = j = 0; i < inlen; i++) {
+	for (i = j = 0; i < input_length; i++) {
 		if (input[i] == BASE64_PAD) {
 			break;
 		}
@@ -160,5 +191,7 @@ base64_decode(const char* input, unsigned int inlen, char* output) {
 		}
 	}
 
-	return j;
+	*decoded_length = j;
+
+	return 1;
 }
