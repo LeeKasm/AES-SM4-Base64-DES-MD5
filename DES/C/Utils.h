@@ -1,5 +1,5 @@
-#ifndef ANDROIDHOOKER_UTILS_H
-#define ANDROIDHOOKER_UTILS_H
+#ifndef DES_UTILS_H
+#define DES_UTILS_H
 
 
 #include <stdio.h>
@@ -16,4 +16,4 @@ __declspec(dllexport) char* DecryptDES(const char* decryptString);
 
 #endif //__cplusplus
 
-#endif //ANDROIDHOOKER_UTILS_H
+#endif //DES_UTILS_H
