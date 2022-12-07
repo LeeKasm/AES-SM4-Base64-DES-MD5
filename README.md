@@ -102,6 +102,13 @@ test code：<br>
 　　　decode_out = new byte[returnSize];<br>
 　　　bool bDecrypt = Algorithm.SM4.SM4_CBC_PKCS7_DECRYPT(key, iv, encode_out, ref decode_out, out returnSize);<br>
 <br>
+　MD5：<br>
+　　C/C++：<br>
+　　　const char* str = "测试字符"; <br>
+　　　char* encode_out = EncryptMD5(str);<br>
+　　C#：<br>
+　　　string encode_out = Algorithm.MD5.EncryptMD5("测试字符");<br>
+<br>
 <br>
 - 📫 How to reach me **LeeKasm@gmail.com**
 
